@@ -8,8 +8,21 @@ import java.awt.event.KeyEvent;
  */
 public class Tank {
 
-    int x,y;
+    private int x,y;
+    //按键是否已经被按下
+    private  boolean BL =false;
+    private  boolean BU =false;
+    private  boolean BR =false;
+    private  boolean BD =false;
+
+    private enum Direction{
+        L,LU,U,RU,R,RD,D,LD,STOP
+    }
+
+    private Direction dir =Direction.STOP;
+
     public static final int TANNK_VEL = 10;
+
 
 
 
@@ -26,6 +39,8 @@ public class Tank {
         g.fillOval(x,y,30,30);//绘
 
         g.setColor(color);//返回你原来的颜色
+
+        move();
     }
 
     //按键按下，坦克自己有反应，应该坦克自己来，而不是让大关键，军长来开车
@@ -34,21 +49,83 @@ public class Tank {
         int key = e.getKeyCode();
         switch (key){
             case KeyEvent.VK_LEFT:
-                x -= TANNK_VEL;
+                BL = true;
                 break;
             case KeyEvent.VK_UP:
-                y -= TANNK_VEL;
+                BU = true;
                 break;
 
             case KeyEvent.VK_RIGHT:
-                x += TANNK_VEL;
+                BR = true;
                 break;
 
             case KeyEvent.VK_DOWN:
-                y +=TANNK_VEL;
+                BD = true;
                 break;
 
         }
+        //按下键之后重新定义坦克的方向
+        locateDirection();
         System.out.println("输出了key");
+    }
+
+
+    //根据方向来移动坦克
+    public void move(){
+        switch (dir){
+            //每次你的顺序都这样就不会出错了
+            case L:
+                x -=TANNK_VEL;
+                break;
+            case LU:
+                x -=TANNK_VEL;
+                y -=TANNK_VEL;
+                break;
+
+            case U:
+                y -= TANNK_VEL;
+                break;
+
+            case RU:
+                x += TANNK_VEL;
+                y -=TANNK_VEL;
+                break;
+
+            case R:
+                x += TANNK_VEL;
+                break;
+
+            case RD:
+                x +=TANNK_VEL;
+                y += TANNK_VEL;
+                break;
+
+            case D:
+                y +=TANNK_VEL;
+                break;
+
+            case LD:
+                x -=TANNK_VEL;
+                y +=TANNK_VEL;
+                break;
+
+            case STOP:
+                break;
+        }
+    }
+
+    //通过按键来得到方向dir
+    public void locateDirection(){
+        if (BL && !BU && !BR && !BD) dir = Direction.L;
+        else if (BL && BU && !BR && !BD) dir = Direction.LU;
+        else if (!BL && BU && !BR && !BD) dir = Direction.U;
+        else if (!BL && !BU && BR && BD) dir = Direction.RU;
+        else if (!BL && !BU && BR && !BD) dir = Direction.R;
+        else if (!BL && !BU && BR && BD) dir = Direction.RD;
+        else if (!BL && !BU && !BR && BD) dir = Direction.D;
+        else if (BL && !BU && !BR && BD) dir = Direction.LD;
+        else if (!BL && !BU && !BR && !BD) dir = Direction.STOP;
+
+
     }
 }
