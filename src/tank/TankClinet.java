@@ -8,6 +8,9 @@ import java.awt.event.WindowEvent;
  * 坦克大战
  */
 public class TankClinet extends Frame{
+    int x = 50,y = 50;//左上角的位置
+
+
 
     //此方法默认会被调动，一段需要重新绘制的话
     public void paint(Graphics g) {
@@ -15,12 +18,14 @@ public class TankClinet extends Frame{
         Color color =g.getColor();
 
         g.setColor(Color.RED);
-        g.fillOval(30,50,30,30);//绘
+        g.fillOval(x,y,30,30);//绘
 
         g.setColor(color);//返回你原来的颜色
         System.out.println("paintMethod");
 
+        //每次重绘就y + = 5；
 
+        y += 5;
 
     }
 
@@ -44,13 +49,33 @@ public class TankClinet extends Frame{
         });
 
         this.setVisible(true);
+
+        //窗口起来就启动这个线程
+        new Thread(new PaintThread()).start();
+
+    }
+
+    //内部类，重新绘制的线程
+   public class PaintThread  implements Runnable{
+
+        @Override
+        public void run() {
+            while (true){
+                repaint();//调用包装类的repaint，如果没有，就是去其父类去找
+
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }
     }
 
     public static void main(String[] args) {
         TankClinet tankClinet = new TankClinet();
         tankClinet.launchFrame();
-
-
 
     }
 
