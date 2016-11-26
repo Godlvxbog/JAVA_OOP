@@ -8,9 +8,11 @@ import java.awt.event.WindowEvent;
  * 坦克大战
  */
 public class TankClinet extends Frame{
+
+
     int x = 50,y = 50;//左上角的位置
 
-
+    Image offsetImage = null;
 
     //此方法默认会被调动，一段需要重新绘制的话
     public void paint(Graphics g) {
@@ -26,6 +28,27 @@ public class TankClinet extends Frame{
         //每次重绘就y + = 5；
 
         y += 5;
+
+    }
+
+    @Override
+    public void update(Graphics g) {//这个画笔就是原来paint的画笔,update截住
+        if (offsetImage == null){
+            offsetImage = this.createImage(800,600);//所有的重新画在这个图片
+        }
+
+        Graphics gOff = offsetImage.getGraphics();//拿到这个了
+
+        Color color = gOff.getColor();
+        //绘制背景图
+        gOff.setColor(Color.GREEN);
+        gOff.fillRect(0,0,800,600);
+        gOff.setColor(color);
+
+        //绘制圆
+        paint(gOff);
+
+        g.drawImage(offsetImage,0,0,null);//把后面的图片画在原来的图片中
 
     }
 
@@ -64,7 +87,7 @@ public class TankClinet extends Frame{
                 repaint();//调用包装类的repaint，如果没有，就是去其父类去找
 
                 try {
-                    Thread.sleep(500);
+                    Thread.sleep(50);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
