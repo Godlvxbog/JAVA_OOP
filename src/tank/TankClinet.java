@@ -14,27 +14,15 @@ public class TankClinet extends Frame{
     //要你很多次修改尺寸时候，所以你定义一个容易扩展维护的const常量
     public static final int GAME_WIDTH = 800;
     public static final int GAME_HEIGHT = 600;
-    public static final int GAME_VEL = 10;
-    int x = 50,y = 50;//左上角的位置
 
+    Tank myTank = new Tank(50,50);
 
     Image offsetImage = null;
 
     //此方法默认会被调动，一段需要重新绘制的话
     public void paint(Graphics g) {
-        //把图形颜色取出来，用完了，你在返回去
-        Color color =g.getColor();
-
-        g.setColor(Color.RED);
-        g.fillOval(x,y,30,30);//绘
-
-        g.setColor(color);//返回你原来的颜色
-        System.out.println("paintMethod");
-
-        //每次重绘就y + = 5；
-
-//        y += 5;
-
+        //这个大管家来调用其自己的方法
+        myTank.draw(g);
     }
 
     @Override
@@ -110,25 +98,7 @@ public class TankClinet extends Frame{
 
         @Override
         public void keyPressed(KeyEvent e) {
-            int key = e.getKeyCode();
-            switch (key){
-                case KeyEvent.VK_LEFT:
-                    x -= GAME_VEL;
-                    break;
-                case KeyEvent.VK_UP:
-                    y -= GAME_VEL;
-                    break;
-
-                case KeyEvent.VK_RIGHT:
-                    x += GAME_VEL;
-                    break;
-
-                case KeyEvent.VK_DOWN:
-                    y +=GAME_VEL;
-                    break;
-
-            }
-            System.out.println("输出了key");
+            myTank.keyPressed(e);
         }
     }
 
