@@ -9,8 +9,11 @@ import java.awt.event.WindowEvent;
  */
 public class TankClinet extends Frame{
 
-
+    //要你很多次修改尺寸时候，所以你定义一个容易扩展维护的const常量
+    public static final int GAME_WIDTH = 800;
+    public static final int GAME_HEIGHT = 600;
     int x = 50,y = 50;//左上角的位置
+
 
     Image offsetImage = null;
 
@@ -34,7 +37,7 @@ public class TankClinet extends Frame{
     @Override
     public void update(Graphics g) {//这个画笔就是原来paint的画笔,update截住
         if (offsetImage == null){
-            offsetImage = this.createImage(800,600);//所有的重新画在这个图片
+            offsetImage = this.createImage(GAME_WIDTH,GAME_HEIGHT);//所有的重新画在这个图片
         }
 
         Graphics gOff = offsetImage.getGraphics();//拿到这个了
@@ -42,7 +45,7 @@ public class TankClinet extends Frame{
         Color color = gOff.getColor();
         //绘制背景图
         gOff.setColor(Color.GREEN);
-        gOff.fillRect(0,0,800,600);
+        gOff.fillRect(0,0,GAME_WIDTH,GAME_HEIGHT);
         gOff.setColor(color);
 
         //绘制圆
@@ -55,7 +58,7 @@ public class TankClinet extends Frame{
     //弹出一个frame
     public void launchFrame(){
         this.setLocation(400,300);
-        this.setSize(800,600);
+        this.setSize(GAME_WIDTH,GAME_HEIGHT);
 
         this.setBackground(Color.GREEN);
 
