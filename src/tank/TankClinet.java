@@ -1,6 +1,8 @@
 package tank;
 
 import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -12,6 +14,7 @@ public class TankClinet extends Frame{
     //要你很多次修改尺寸时候，所以你定义一个容易扩展维护的const常量
     public static final int GAME_WIDTH = 800;
     public static final int GAME_HEIGHT = 600;
+    public static final int GAME_VEL = 10;
     int x = 50,y = 50;//左上角的位置
 
 
@@ -30,7 +33,7 @@ public class TankClinet extends Frame{
 
         //每次重绘就y + = 5；
 
-        y += 5;
+//        y += 5;
 
     }
 
@@ -74,6 +77,8 @@ public class TankClinet extends Frame{
             }
         });
 
+        this.addKeyListener(new KeyMonitor());
+
         this.setVisible(true);
 
         //窗口起来就启动这个线程
@@ -90,12 +95,40 @@ public class TankClinet extends Frame{
                 repaint();//调用包装类的repaint，如果没有，就是去其父类去找
 
                 try {
-                    Thread.sleep(50);
+                    Thread.sleep(500);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
 
             }
+        }
+    }
+
+    //实现监听，这里不用实现KeyListener接口，而是继承KeyAdapter，因为不用实现其所有的方法
+    //只需要复写你需要的方法即可
+    public class KeyMonitor extends KeyAdapter{
+
+        @Override
+        public void keyPressed(KeyEvent e) {
+            int key = e.getKeyCode();
+            switch (key){
+                case KeyEvent.VK_LEFT:
+                    x -= GAME_VEL;
+                    break;
+                case KeyEvent.VK_UP:
+                    y -= GAME_VEL;
+                    break;
+
+                case KeyEvent.VK_RIGHT:
+                    x += GAME_VEL;
+                    break;
+
+                case KeyEvent.VK_DOWN:
+                    y +=GAME_VEL;
+                    break;
+
+            }
+            System.out.println("输出了key");
         }
     }
 
