@@ -5,6 +5,7 @@ import java.awt.event.KeyEvent;
 
 /**
  * 类：当你考虑完属性之后，你需要考虑的是构造方法，其他的方法
+ * 面向对象强调的是：关于状态的变化而非过程
  */
 public class Tank {
 
@@ -16,7 +17,7 @@ public class Tank {
     private  boolean BD =false;
 
 
-    private enum Direction{
+    protected enum Direction{
         L,LU,U,RU,R,RD,D,LD,STOP
     }
 

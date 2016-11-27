@@ -16,13 +16,17 @@ public class TankClinet extends Frame{
     public static final int GAME_HEIGHT = 600;
 
     Tank myTank = new Tank(50,50);
+    Missile missile = new Missile(50,50, Tank.Direction.R);
+
 
     Image offsetImage = null;
 
     //此方法默认会被调动，一段需要重新绘制的话
     public void paint(Graphics g) {
         //这个大管家来调用其自己的方法
+
         myTank.draw(g);
+        missile.draw(g);
     }
 
     @Override
@@ -110,6 +114,8 @@ public class TankClinet extends Frame{
     public static void main(String[] args) {
         TankClinet tankClinet = new TankClinet();
         tankClinet.launchFrame();
+
+
 
     }
 
