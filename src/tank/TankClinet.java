@@ -15,8 +15,8 @@ public class TankClinet extends Frame{
     public static final int GAME_WIDTH = 800;
     public static final int GAME_HEIGHT = 600;
 
-    Tank myTank = new Tank(50,50);
-    Missile missile = new Missile(50,50, Tank.Direction.R);
+    Tank myTank = new Tank(50,50,this);
+    Missile missile = null;//初始化是在坦克按下ctrl之后才初始化
 
 
     Image offsetImage = null;
@@ -24,9 +24,10 @@ public class TankClinet extends Frame{
     //此方法默认会被调动，一段需要重新绘制的话
     public void paint(Graphics g) {
         //这个大管家来调用其自己的方法
-
         myTank.draw(g);
-        missile.draw(g);
+        if (missile!=null){
+            missile.draw(g);
+        }
     }
 
     @Override

@@ -8,7 +8,10 @@ import java.awt.event.KeyEvent;
  * 面向对象强调的是：关于状态的变化而非过程
  */
 public class Tank {
+    public static final int WIDTH = 30;
+    public static final int HEIGHT = 30;
 
+    TankClinet tc;
     private int x,y;
     //按键是否已经被按下
     private  boolean BL =false;
@@ -25,7 +28,11 @@ public class Tank {
 
     public static final int TANNK_VEL = 20;
 
-
+    //需要把这里的missile传到tankclient中missile，方法是拿到missile的引用
+    public Tank(int x,int y,TankClinet tc){
+        this(x, y);
+        this.tc = tc;
+    }
 
 
     public Tank(int x, int y) {
@@ -38,7 +45,7 @@ public class Tank {
         Color color =g.getColor();
 
         g.setColor(Color.RED);
-        g.fillOval(x,y,30,30);//绘
+        g.fillOval(x,y,WIDTH,HEIGHT);//绘
 
         g.setColor(color);//返回你原来的颜色
 
@@ -50,6 +57,10 @@ public class Tank {
     public void keyPressed(KeyEvent e){
         int key = e.getKeyCode();
         switch (key){
+            case KeyEvent.VK_CONTROL:
+                tc.missile = fire();//直接用tc来接收，初始化missle
+                System.out.println("ctrl=====");
+                break;
             case KeyEvent.VK_LEFT:
                 BL = true;
                 break;
@@ -157,5 +168,13 @@ public class Tank {
         else if (!BL && !BU && !BR && !BD) dir = Direction.STOP;
 
 
+    }
+
+    //坦克打出来一发子弹
+    public Missile fire(){
+        int x = this.x + Tank.WIDTH/2 - Missile.WIDTH/2;
+        int y = this.y + Tank.HEIGHT/2 - Missile.HEIGHT/2;
+        Missile misle = new Missile(x,y,dir);
+        return misle;
     }
 }

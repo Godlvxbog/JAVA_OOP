@@ -9,6 +9,9 @@ import java.awt.*;
 public class Missile {
     public static final int MISLE_VEL = 40;
 
+    public static final int WIDTH = 10;
+    public static final int HEIGHT = 10;
+
     private  int x;
     private int y;
 
@@ -24,7 +27,7 @@ public class Missile {
         Color color = g.getColor();
 
         g.setColor(Color.black);
-        g.fillRect(x,y,10,10);
+        g.fillRect(x,y,WIDTH,HEIGHT);
 
         g.setColor(color);
         move();
@@ -71,6 +74,8 @@ public class Missile {
 
         }
     }
+
+
 
 
 }
