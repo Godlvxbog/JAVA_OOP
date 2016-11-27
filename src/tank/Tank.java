@@ -15,13 +15,14 @@ public class Tank {
     private  boolean BR =false;
     private  boolean BD =false;
 
+
     private enum Direction{
         L,LU,U,RU,R,RD,D,LD,STOP
     }
 
     private Direction dir =Direction.STOP;
 
-    public static final int TANNK_VEL = 10;
+    public static final int TANNK_VEL = 20;
 
 
 
@@ -44,7 +45,7 @@ public class Tank {
     }
 
     //按键按下，坦克自己有反应，应该坦克自己来，而不是让大关键，军长来开车
-
+    //按键之后，会把所按键转换成dir
     public void keyPressed(KeyEvent e){
         int key = e.getKeyCode();
         switch (key){
@@ -68,6 +69,34 @@ public class Tank {
         locateDirection();
         System.out.println("输出了key");
     }
+
+
+    public void keyReleased(KeyEvent e) {
+        int key = e.getKeyCode();
+        switch (key){
+            case KeyEvent.VK_LEFT:
+                BL = false;
+                break;
+            case KeyEvent.VK_UP:
+                BU = false;
+                break;
+
+            case KeyEvent.VK_RIGHT:
+                BR = false;
+                break;
+
+            case KeyEvent.VK_DOWN:
+                BD = false;
+                break;
+
+        }
+        //按下键之后重新定义坦克的方向
+        locateDirection();
+    }
+
+
+
+
 
 
     //根据方向来移动坦克
@@ -119,7 +148,7 @@ public class Tank {
         if (BL && !BU && !BR && !BD) dir = Direction.L;
         else if (BL && BU && !BR && !BD) dir = Direction.LU;
         else if (!BL && BU && !BR && !BD) dir = Direction.U;
-        else if (!BL && !BU && BR && BD) dir = Direction.RU;
+        else if (!BL && BU && BR && !BD) dir = Direction.RU;
         else if (!BL && !BU && BR && !BD) dir = Direction.R;
         else if (!BL && !BU && BR && BD) dir = Direction.RD;
         else if (!BL && !BU && !BR && BD) dir = Direction.D;

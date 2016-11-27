@@ -100,6 +100,11 @@ public class TankClinet extends Frame{
         public void keyPressed(KeyEvent e) {
             myTank.keyPressed(e);
         }
+
+        @Override
+        public void keyReleased(KeyEvent e) {
+            myTank.keyReleased(e);
+        }
     }
 
     public static void main(String[] args) {
