@@ -212,6 +212,21 @@ public class Tank {
             case STOP:
                 break;
         }
+
+        //防止出界问题
+        if (x < 0){
+            x = 0;
+        }
+        if (y < 0){
+            y = 0;
+        }
+        if ( x+Tank.WIDTH > TankClinet.GAME_WIDTH){
+            x = TankClinet.GAME_WIDTH - Tank.WIDTH;
+        }
+
+        if (y + Tank.HEIGHT > TankClinet.GAME_HEIGHT){
+            y = TankClinet.GAME_HEIGHT - Tank.HEIGHT;
+        }
     }
 
     //通过按键来得到方向dir
