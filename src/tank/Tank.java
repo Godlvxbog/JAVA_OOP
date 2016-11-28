@@ -50,8 +50,12 @@ public class Tank {
 
         g.setColor(color);//返回你原来的颜色
 
-        move();
         drawPt(g);
+        move();
+
+
+
+
 
 
 
@@ -111,10 +115,7 @@ public class Tank {
     public void keyPressed(KeyEvent e){
         int key = e.getKeyCode();
         switch (key){
-            case KeyEvent.VK_CONTROL:
-                tc.missile = fire();//直接用tc来接收，初始化missle
-                System.out.println("ctrl=====");
-                break;
+
             case KeyEvent.VK_LEFT:
                 BL = true;
                 break;
@@ -140,6 +141,10 @@ public class Tank {
     public void keyReleased(KeyEvent e) {
         int key = e.getKeyCode();
         switch (key){
+            case KeyEvent.VK_CONTROL:
+                fire();//直接用tc来接收，初始化missle
+                System.out.println("ctrl=====");
+                break;
             case KeyEvent.VK_LEFT:
                 BL = false;
                 break;
@@ -228,7 +233,8 @@ public class Tank {
     public Missile fire(){
         int x = this.x + Tank.WIDTH/2 - Missile.WIDTH/2;
         int y = this.y + Tank.HEIGHT/2 - Missile.HEIGHT/2;
-        Missile misle = new Missile(x,y,ptDir);
+        Missile misle = new Missile(x,y,ptDir,this.tc);//把大管家tc传给misile
+        tc.missiles.add(misle);
         return misle;
     }
 }

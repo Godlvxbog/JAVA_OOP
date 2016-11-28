@@ -5,6 +5,9 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
+import java.util.List;
+
 
 /**
  * 坦克大战
@@ -16,18 +19,26 @@ public class TankClinet extends Frame{
     public static final int GAME_HEIGHT = 600;
 
     Tank myTank = new Tank(50,50,this);
-    Missile missile = null;//初始化是在坦克按下ctrl之后才初始化
+//    Missile missile = null;//初始化是在坦克按下ctrl之后才初始化
+    List<Missile> missiles =new ArrayList<Missile>();
+
+
 
 
     Image offsetImage = null;
 
     //此方法默认会被调动，一段需要重新绘制的话
     public void paint(Graphics g) {
+        g.drawString("Missiles:" + missiles.size(), 60, 40);
         //这个大管家来调用其自己的方法
-        myTank.draw(g);
-        if (missile!=null){
+
+        for (int i = 0 ;i<missiles.size();i++) {
+            Missile missile =missiles.get(i);
             missile.draw(g);
         }
+
+
+        myTank.draw(g);
     }
 
     @Override
@@ -88,7 +99,7 @@ public class TankClinet extends Frame{
                 repaint();//调用包装类的repaint，如果没有，就是去其父类去找
 
                 try {
-                    Thread.sleep(500);
+                    Thread.sleep(250);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

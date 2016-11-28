@@ -5,6 +5,7 @@ import java.awt.*;
 /**
  * 思考：
  * 属性
+ * 需要移除当前的missle，在client中的missiles所以你需要引入missile
  */
 public class Missile {
     public static final int MISLE_VEL = 40;
@@ -12,8 +13,17 @@ public class Missile {
     public static final int WIDTH = 10;
     public static final int HEIGHT = 10;
 
+    private  TankClinet tc;
+
     private  int x;
     private int y;
+
+    public boolean isLive() {
+        return live;
+    }
+
+
+    private boolean live =true; //添加是否活着的变量，如果死亡就从要绘制的容器中取出来
 
     private Tank.Direction dir ;//反向，类名叫Tank.Direction
     //构造方法
@@ -22,6 +32,12 @@ public class Missile {
         this.y = y;
         this.dir = dir;
     }
+
+    public Missile(int x,int y ,Tank.Direction dir,TankClinet tc){
+        this(x,y,dir);
+        this.tc =tc;
+    }
+
 
     public void draw(Graphics g){
         Color color = g.getColor();
@@ -72,6 +88,11 @@ public class Missile {
                 y += MISLE_VEL;
                 break;
 
+        }
+        //移动完成之后就判断是否出界
+        if (x <0 || x >TankClinet.GAME_WIDTH || y <0 ||y >TankClinet.GAME_HEIGHT){
+            live = false;
+            tc.missiles.remove(this);//移除自己
         }
     }
 
