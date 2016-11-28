@@ -8,8 +8,16 @@ import java.awt.event.KeyEvent;
  * 面向对象强调的是：关于状态的变化而非过程
  */
 public class Tank {
-    private boolean good;//确定你是好的坦克还是坏的坦克
+    public boolean isLive() {
+        return live;
+    }
 
+    public void setLive(boolean live) {
+        this.live = live;
+    }
+
+    private boolean live = true;
+    private boolean good ;
     public static final int WIDTH = 30;
     public static final int HEIGHT = 30;
 
@@ -20,16 +28,6 @@ public class Tank {
     private  boolean BU =false;
     private  boolean BR =false;
     private  boolean BD =false;
-
-    public boolean isLive() {
-        return live;
-    }
-
-    public void setLive(boolean live) {
-        this.live = live;
-    }
-
-    private boolean live =true;//定义坦克的生死
 
 
     protected enum Direction{
@@ -42,7 +40,7 @@ public class Tank {
     public static final int TANNK_VEL = 20;
 
     //需要把这里的missile传到tankclient中missile，方法是拿到missile的引用
-    public Tank(int x,int y, boolean good,TankClinet tc){
+    public Tank(int x,int y,boolean good, TankClinet tc){
         this(x, y,good);
         this.tc = tc;
     }
@@ -51,20 +49,17 @@ public class Tank {
     public Tank(int x, int y,boolean good) {
         this.x = x;
         this.y = y;
-        this.good = good;
-
+        this.good =good;
     }
 
     public void draw(Graphics g){
-        if (!live){//如果没有活着就不画了
+        if (!live){
             return;
         }
-
         //把图形颜色取出来，用完了，你在返回去
         Color color =g.getColor();
 
-        if (good){
-
+        if (good ==true){
             g.setColor(Color.RED);
         }else{
             g.setColor(Color.ORANGE);
@@ -82,10 +77,6 @@ public class Tank {
 
 
 
-    }
-
-    public Rectangle getRect(){
-        return new Rectangle(x,y,WIDTH,HEIGHT);
     }
 
     public void drawPt(Graphics g){
@@ -278,5 +269,9 @@ public class Tank {
         Missile misle = new Missile(x,y,ptDir,this.tc);//把大管家tc传给misile
         tc.missiles.add(misle);
         return misle;
+    }
+
+    public Rectangle getRect(){
+        return new Rectangle(x,y,WIDTH,HEIGHT);
     }
 }

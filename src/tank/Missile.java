@@ -96,6 +96,7 @@ public class Missile {
         //移动完成之后就判断是否出界
         if (x <0 || x >TankClinet.GAME_WIDTH || y <0 ||y >TankClinet.GAME_HEIGHT){
             live = false;
+            tc.missiles.remove(this);//移除自己
         }
     }
 
@@ -103,15 +104,15 @@ public class Missile {
         return new Rectangle(x,y,WIDTH,HEIGHT);
     }
 
-    public boolean hitTank(Tank tank){
-        if (this.getRect().intersects(tank.getRect())  && tank.isLive()){//碰撞检测
-            tank.setLive(false);
-            this.live = false;//当前的子弹，如果tank已经死掉了，那么后面的子弹，将不会被修改live
 
-            return true;
+
+    public boolean hitTank(Tank tank){
+        if (getRect().intersects(tank.getRect()) && tank.isLive()){
+            tank.setLive(false);
+            this.live = false;
+            return true;//打中了
         }
         return false;
-
     }
 
 

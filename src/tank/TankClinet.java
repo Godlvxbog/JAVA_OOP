@@ -19,11 +19,12 @@ public class TankClinet extends Frame{
     public static final int GAME_HEIGHT = 600;
 
     Tank myTank = new Tank(50,50,true,this);
-
-    //敌军的tank
-    Tank enemyTank = new Tank(100,100,false,this);
+    Tank enemyTank =new Tank(100,100,false ,this);
 //    Missile missile = null;//初始化是在坦克按下ctrl之后才初始化
     List<Missile> missiles =new ArrayList<Missile>();
+
+    List<Explode> explodes =new ArrayList<Explode>();
+
 
 
 
@@ -37,14 +38,18 @@ public class TankClinet extends Frame{
 
         for (int i = 0 ;i<missiles.size();i++) {
             Missile missile =missiles.get(i);
-            //取出来的每一个子弹都要调用打击tank
             missile.hitTank(enemyTank);
             missile.draw(g);
         }
 
+        for (int i = 0; i<explodes.size();i++){
+            Explode explode = explodes.get(i);
+            explode.draw(g);
+        }
 
-        myTank.draw(g);
         enemyTank.draw(g);
+        myTank.draw(g);
+
     }
 
     @Override
