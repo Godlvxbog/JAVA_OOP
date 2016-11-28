@@ -21,6 +21,16 @@ public class Tank {
     private  boolean BR =false;
     private  boolean BD =false;
 
+    public boolean isLive() {
+        return live;
+    }
+
+    public void setLive(boolean live) {
+        this.live = live;
+    }
+
+    private boolean live =true;//定义坦克的生死
+
 
     protected enum Direction{
         L,LU,U,RU,R,RD,D,LD,STOP
@@ -46,6 +56,10 @@ public class Tank {
     }
 
     public void draw(Graphics g){
+        if (!live){//如果没有活着就不画了
+            return;
+        }
+
         //把图形颜色取出来，用完了，你在返回去
         Color color =g.getColor();
 
@@ -68,6 +82,10 @@ public class Tank {
 
 
 
+    }
+
+    public Rectangle getRect(){
+        return new Rectangle(x,y,WIDTH,HEIGHT);
     }
 
     public void drawPt(Graphics g){

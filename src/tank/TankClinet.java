@@ -37,6 +37,8 @@ public class TankClinet extends Frame{
 
         for (int i = 0 ;i<missiles.size();i++) {
             Missile missile =missiles.get(i);
+            //取出来的每一个子弹都要调用打击tank
+            missile.hitTank(enemyTank);
             missile.draw(g);
         }
 
