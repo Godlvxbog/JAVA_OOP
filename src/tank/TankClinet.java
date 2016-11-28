@@ -34,6 +34,7 @@ public class TankClinet extends Frame{
     //此方法默认会被调动，一段需要重新绘制的话
     public void paint(Graphics g) {
         g.drawString("Missiles:" + missiles.size(), 60, 40);
+        g.drawString("explodes:" + explodes.size(), 60, 60);
         //这个大管家来调用其自己的方法
 
         for (int i = 0 ;i<missiles.size();i++) {

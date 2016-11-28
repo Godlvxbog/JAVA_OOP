@@ -6,9 +6,20 @@ import java.awt.*;
  * Created by Administrator on 2016/11/28.
  */
 public class Explode {
+
+
     //每个部分都持有大管家的引用
     private TankClinet tc;
     int x,y;
+
+    public boolean isLive() {
+        return live;
+    }
+
+    public void setLive(boolean live) {
+        this.live = live;
+    }
+
     private boolean live = true;
     //多个圆在同一个位置显示出来
     int[] diameter = {4,7,12,18,26,32,49,30,14,6};
@@ -23,6 +34,7 @@ public class Explode {
 
     public void draw(Graphics g){
         if (!live){
+            tc.explodes.remove(this);//移除掉
             return;
         }
         //已经画完了

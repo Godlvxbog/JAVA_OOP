@@ -110,6 +110,10 @@ public class Missile {
         if (getRect().intersects(tank.getRect()) && tank.isLive()){
             tank.setLive(false);
             this.live = false;
+            //增加爆炸
+            Explode explode =new Explode(x,y,tc);
+            tc.explodes.add(explode);
+
             return true;//打中了
         }
         return false;
