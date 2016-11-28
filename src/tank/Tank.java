@@ -8,6 +8,8 @@ import java.awt.event.KeyEvent;
  * 面向对象强调的是：关于状态的变化而非过程
  */
 public class Tank {
+    private boolean good;//确定你是好的坦克还是坏的坦克
+
     public static final int WIDTH = 30;
     public static final int HEIGHT = 30;
 
@@ -30,22 +32,29 @@ public class Tank {
     public static final int TANNK_VEL = 20;
 
     //需要把这里的missile传到tankclient中missile，方法是拿到missile的引用
-    public Tank(int x,int y,TankClinet tc){
-        this(x, y);
+    public Tank(int x,int y, boolean good,TankClinet tc){
+        this(x, y,good);
         this.tc = tc;
     }
 
 
-    public Tank(int x, int y) {
+    public Tank(int x, int y,boolean good) {
         this.x = x;
         this.y = y;
+        this.good = good;
+
     }
 
     public void draw(Graphics g){
         //把图形颜色取出来，用完了，你在返回去
         Color color =g.getColor();
 
-        g.setColor(Color.RED);
+        if (good){
+
+            g.setColor(Color.RED);
+        }else{
+            g.setColor(Color.ORANGE);
+        }
         g.fillOval(x,y,WIDTH,HEIGHT);//绘
 
         g.setColor(color);//返回你原来的颜色

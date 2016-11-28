@@ -18,7 +18,10 @@ public class TankClinet extends Frame{
     public static final int GAME_WIDTH = 800;
     public static final int GAME_HEIGHT = 600;
 
-    Tank myTank = new Tank(50,50,this);
+    Tank myTank = new Tank(50,50,true,this);
+
+    //敌军的tank
+    Tank enemyTank = new Tank(100,100,false,this);
 //    Missile missile = null;//初始化是在坦克按下ctrl之后才初始化
     List<Missile> missiles =new ArrayList<Missile>();
 
@@ -39,6 +42,7 @@ public class TankClinet extends Frame{
 
 
         myTank.draw(g);
+        enemyTank.draw(g);
     }
 
     @Override
@@ -51,7 +55,7 @@ public class TankClinet extends Frame{
 
         Color color = gOff.getColor();
         //绘制背景图
-        gOff.setColor(Color.GREEN);
+        gOff.setColor(Color.BLUE);
         gOff.fillRect(0,0,GAME_WIDTH,GAME_HEIGHT);
         gOff.setColor(color);
 
@@ -67,7 +71,7 @@ public class TankClinet extends Frame{
         this.setLocation(400,300);
         this.setSize(GAME_WIDTH,GAME_HEIGHT);
 
-        this.setBackground(Color.GREEN);
+        this.setBackground(Color.BLUE);
 
         this.setTitle("Tank_War");
         //不让改变大小
