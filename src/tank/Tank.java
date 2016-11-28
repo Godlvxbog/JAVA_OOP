@@ -25,6 +25,7 @@ public class Tank {
     }
 
     private Direction dir =Direction.STOP;
+    private Direction ptDir =Direction.D;//炮筒与坦克的方向应该是独立的
 
     public static final int TANNK_VEL = 20;
 
@@ -50,6 +51,59 @@ public class Tank {
         g.setColor(color);//返回你原来的颜色
 
         move();
+        drawPt(g);
+
+
+
+    }
+
+    public void drawPt(Graphics g){
+        //根据方向来画出不同的炮筒方向
+
+        switch (ptDir) {
+            //每次你的顺序都这样就不会出错了
+            case L:
+                g.drawLine(x + Tank.WIDTH / 2, y + Tank.HEIGHT / 2, x, y + Tank.HEIGHT / 2);
+                break;
+            case LU:
+                g.drawLine(x + Tank.WIDTH / 2, y + Tank.HEIGHT / 2, x, y );
+
+                break;
+
+            case U:
+                g.drawLine(x + Tank.WIDTH / 2, y + Tank.HEIGHT / 2, x + Tank.WIDTH/2, y );
+
+                break;
+
+            case RU:
+                g.drawLine(x + Tank.WIDTH / 2, y + Tank.HEIGHT / 2, x +Tank.WIDTH , y );
+
+                break;
+
+            case R:
+                g.drawLine(x + Tank.WIDTH / 2, y + Tank.HEIGHT / 2, x  +Tank.WIDTH , y + Tank.HEIGHT / 2);
+
+                break;
+
+            case RD:
+                g.drawLine(x + Tank.WIDTH / 2, y + Tank.HEIGHT / 2, x  +Tank.WIDTH, y + Tank.HEIGHT);
+
+                break;
+
+            case D:
+                g.drawLine(x + Tank.WIDTH / 2, y + Tank.HEIGHT / 2, x  +Tank.WIDTH/2, y + Tank.HEIGHT);
+
+                break;
+
+            case LD:
+                g.drawLine(x + Tank.WIDTH / 2, y + Tank.HEIGHT / 2, x, y + Tank.HEIGHT );
+                break;
+        }
+
+        if (this.dir != Direction.STOP){
+            this.ptDir = this.dir;
+        }
+
     }
 
     //按键按下，坦克自己有反应，应该坦克自己来，而不是让大关键，军长来开车
@@ -174,7 +228,7 @@ public class Tank {
     public Missile fire(){
         int x = this.x + Tank.WIDTH/2 - Missile.WIDTH/2;
         int y = this.y + Tank.HEIGHT/2 - Missile.HEIGHT/2;
-        Missile misle = new Missile(x,y,dir);
+        Missile misle = new Missile(x,y,ptDir);
         return misle;
     }
 }
