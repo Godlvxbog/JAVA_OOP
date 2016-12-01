@@ -351,4 +351,27 @@ public class Tank {
         }
         return false;
     }
+
+
+    //写和坦克的相撞
+    public boolean collidesTank(Tank tank){
+        if (live && getRect().intersects(tank.getRect()) && tank.live){
+            this.stay();
+            tank.stay();
+            return true;
+        }
+        return false;
+    }
+
+    public boolean collideTanks(List<Tank> tanks){
+        for (Tank tank : tanks){
+            if (this != tank){//不是同一辆坦克才检测相撞
+
+                tank.collidesTank(this);
+                return true;
+            }
+        }
+        return false;
+    }
+
 }
