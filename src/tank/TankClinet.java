@@ -10,11 +10,16 @@ import java.util.List;
 
 
 /**
- * 坦克大战
+ * 这个类的作用是：坦克游戏的主窗口
+ *
  */
 public class TankClinet extends Frame{
 
     //要你很多次修改尺寸时候，所以你定义一个容易扩展维护的const常量
+
+    /**
+     * 坦克游戏的宽度
+     */
     public static final int GAME_WIDTH = 800;
     public static final int GAME_HEIGHT = 600;
 
@@ -42,11 +47,18 @@ public class TankClinet extends Frame{
 
     //此方法默认会被调动，一段需要重新绘制的话;每隔50ms条用一次
     public void paint(Graphics g) {
+        /*
+        指明子弹，爆炸，生命值，敌军坦克数量
+         */
         g.drawString("Missiles:" + missiles.size(), 60, 40);
         g.drawString("explodes:" + explodes.size(), 60, 60);
         g.drawString("lifeValue:" + myTank.getLife(), 60, 80);
         g.drawString("enemyTank:" + enemyTanks.size(), 60, 100);
         //这个大管家来调用其自己的方法
+        if (enemyTanks.size() <= 0){
+            addTank(6);
+        }
+
        for (int i = 0; i<walls.size() ; i++){
            Wall wall = walls.get(i);
            wall.draw(g);
@@ -115,7 +127,9 @@ public class TankClinet extends Frame{
         }
     }
 
-    //弹出一个frame
+    /**
+     * 本方法显示主窗口
+     */
     public void launchFrame(){
         addTank(10);
         addWalls(2);

@@ -43,9 +43,11 @@ public class Missile {
 
 
     public void draw(Graphics g){
-        if (!live){
+        if (!live) {
+
             tc.missiles.remove(this);
             return;
+
         }
         Color color = g.getColor();
 
@@ -120,10 +122,12 @@ public class Missile {
                 if (tank.getLife() <=0){
                     tank.setLive(false);
                 }
+            }else{
+
+                tank.setLive(false);
             }
 
             this.live = false;
-            tank.setLive(false);
             //增加爆炸
             Explode explode =new Explode(x,y,tc);
             tc.explodes.add(explode);

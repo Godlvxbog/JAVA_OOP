@@ -179,7 +179,12 @@ public class Tank {
     public void keyPressed(KeyEvent e){
         int key = e.getKeyCode();
         switch (key){
-
+            case KeyEvent.VK_F2:
+                if (!this.live){
+                    this.live = true;
+                    this.life =100;
+                    break;
+                }
             case KeyEvent.VK_LEFT:
                 BL = true;
                 break;
@@ -417,6 +422,11 @@ public class Tank {
         return false;
     }
 
+    /**
+     *
+     * @param tanks被撞的坦克
+     * @return 撞上了就返回true；
+     */
     public boolean collideTanks(List<Tank> tanks){
         for (Tank tank : tanks){
             if (this != tank){//不是同一辆坦克才检测相撞

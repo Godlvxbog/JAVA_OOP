@@ -21,6 +21,7 @@ public class Blood {
 
     private boolean live =true;
 
+    //血块运动的轨迹有pos中各个点组成
     private int[][] pos={
         {350,300},{360,300},{375,275},{400,200},{360,270},{365,290}
 
