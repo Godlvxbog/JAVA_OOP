@@ -1,6 +1,7 @@
 package tank;
 
 import java.awt.*;
+import java.util.List;
 
 /**
  * 思考：
@@ -115,6 +116,16 @@ public class Missile {
             tc.explodes.add(explode);
 
             return true;//打中了
+        }
+        return false;
+    }
+
+    //打击多个坦克
+    public boolean hitTanks(List<Tank> tanks){
+        for (int i =0 ;i<tanks.size();i++){
+            if (hitTank(tanks.get(i))){//打中了这个坦克
+               return true;
+            }
         }
         return false;
     }

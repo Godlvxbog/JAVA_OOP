@@ -2,6 +2,7 @@ package tank;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.util.Random;
 
 /**
  * 类：当你考虑完属性之后，你需要考虑的是构造方法，其他的方法
@@ -39,9 +40,10 @@ public class Tank {
 
     public static final int TANNK_VEL = 20;
 
-    //需要把这里的missile传到tankclient中missile，方法是拿到missile的引用
-    public Tank(int x,int y,boolean good, TankClinet tc){
+    //需要把这里的missile传到tankclient中missile，方法是拿到missile的引
+    public Tank(int x,int y,boolean good,Direction dir, TankClinet tc){
         this(x, y,good);
+        this.dir = dir;
         this.tc = tc;
     }
 
@@ -51,6 +53,10 @@ public class Tank {
         this.y = y;
         this.good =good;
     }
+
+//    随机数产生器有一个就够了
+
+    private static Random random = new Random();
 
     public void draw(Graphics g){
         if (!live){
@@ -245,6 +251,16 @@ public class Tank {
         if (y + Tank.HEIGHT > TankClinet.GAME_HEIGHT){
             y = TankClinet.GAME_HEIGHT - Tank.HEIGHT;
         }
+
+        //每一栋一步后需要随机产生坦克的方向
+        if (!good){
+            Direction[] dirs =Direction.values();//把枚举换成数组
+            int randNum = random.nextInt(dirs.length);//随机整数作为索引
+            dir = dirs[randNum];
+        }
+
+
+
     }
 
     //通过按键来得到方向dir

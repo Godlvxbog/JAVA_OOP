@@ -18,12 +18,15 @@ public class TankClinet extends Frame{
     public static final int GAME_WIDTH = 800;
     public static final int GAME_HEIGHT = 600;
 
-    Tank myTank = new Tank(50,50,true,this);
-    Tank enemyTank =new Tank(100,100,false ,this);
+    Tank myTank = new Tank(50,50,true, Tank.Direction.STOP, this);
+
 //    Missile missile = null;//初始化是在坦克按下ctrl之后才初始化
     List<Missile> missiles =new ArrayList<Missile>();
 
     List<Explode> explodes =new ArrayList<Explode>();
+
+    List<Tank> enemyTanks =new ArrayList<Tank>();
+
 
 
 
@@ -31,7 +34,7 @@ public class TankClinet extends Frame{
 
     Image offsetImage = null;
 
-    //此方法默认会被调动，一段需要重新绘制的话
+    //此方法默认会被调动，一段需要重新绘制的话;每隔50ms条用一次
     public void paint(Graphics g) {
         g.drawString("Missiles:" + missiles.size(), 60, 40);
         g.drawString("explodes:" + explodes.size(), 60, 60);
@@ -39,7 +42,7 @@ public class TankClinet extends Frame{
 
         for (int i = 0 ;i<missiles.size();i++) {
             Missile missile =missiles.get(i);
-            missile.hitTank(enemyTank);
+            missile.hitTanks(enemyTanks);//枚举所有的missile，打击每一个坦克
             missile.draw(g);
         }
 
@@ -48,7 +51,12 @@ public class TankClinet extends Frame{
             explode.draw(g);
         }
 
-        enemyTank.draw(g);
+        for (int i = 0;i<enemyTanks.size();i++){
+            Tank enemy =enemyTanks.get(i);
+            enemy.draw(g);
+
+        }
+
         myTank.draw(g);
 
     }
@@ -74,8 +82,17 @@ public class TankClinet extends Frame{
 
     }
 
+    public void addTank(int tankNum){
+        for (int i = 0 ;i< tankNum;i++ ){
+            Tank enemy =new Tank(50 +40*(i+1),100,false, Tank.Direction.D, this);
+            enemyTanks.add(enemy);
+        }
+    }
+
     //弹出一个frame
     public void launchFrame(){
+        addTank(10);
+
         this.setLocation(400,300);
         this.setSize(GAME_WIDTH,GAME_HEIGHT);
 
@@ -122,6 +139,7 @@ public class TankClinet extends Frame{
 
     //实现监听，这里不用实现KeyListener接口，而是继承KeyAdapter，因为不用实现其所有的方法
     //只需要复写你需要的方法即可
+    //一旦触发就调用
     public class KeyMonitor extends KeyAdapter{
 
         @Override
