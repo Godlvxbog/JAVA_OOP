@@ -54,6 +54,7 @@ public class Tank {
     }
 
     private int life = 100;//生命值，
+    private BloodBar bb =new BloodBar();
 
 
 
@@ -103,6 +104,11 @@ public class Tank {
         g.fillOval(x,y,WIDTH,HEIGHT);//绘
 
         g.setColor(color);//返回你原来的颜色
+
+        if (good){
+
+            bb.draw(g);
+        }
 
         drawPt(g);
         move();
@@ -407,5 +413,24 @@ public class Tank {
         }
         return false;
     }
+
+
+    //,血条是属于坦克的一部分，有draw方法 draw是空心的
+    public class BloodBar{
+
+        public void draw(Graphics g){
+        Color color =g.getColor();
+
+        g.setColor(Color.CYAN);
+        g.drawRect(x,y -10,WIDTH,10);
+
+        int w =WIDTH*life /100;
+        g.fillRect(x,y-10,w,10);
+
+        g.setColor(color);
+    }
+}
+
+
 
 }
