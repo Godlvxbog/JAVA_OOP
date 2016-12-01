@@ -111,7 +111,17 @@ public class Missile {
 
     public boolean hitTank(Tank tank){
         if (this.live && getRect().intersects(tank.getRect()) && tank.isLive() && this.good != tank.isGood()){
-            tank.setLive(false);
+            if (tank.isGood()){
+                //先去掉20
+                int life = tank.getLife();
+                life -= 20;
+                tank.setLife(life);
+
+                if (tank.getLife() <=0){
+                    tank.setLive(false);
+                }
+            }
+
             this.live = false;
             //增加爆炸
             Explode explode =new Explode(x,y,tc);

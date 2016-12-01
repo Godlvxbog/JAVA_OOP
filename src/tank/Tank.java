@@ -45,6 +45,15 @@ public class Tank {
     private int oldX;
     private int oldY;
 
+    public int getLife() {
+        return life;
+    }
+
+    public void setLife(int life) {
+        this.life = life;
+    }
+
+    private int life = 100;//生命值，
 
 
 

@@ -42,6 +42,7 @@ public class TankClinet extends Frame{
     public void paint(Graphics g) {
         g.drawString("Missiles:" + missiles.size(), 60, 40);
         g.drawString("explodes:" + explodes.size(), 60, 60);
+        g.drawString("lifeValue:" + myTank.getLife(), 60, 80);
         //这个大管家来调用其自己的方法
        for (int i = 0; i<walls.size() ; i++){
            Wall wall = walls.get(i);
