@@ -186,6 +186,10 @@ public class Tank {
     public void keyReleased(KeyEvent e) {
         int key = e.getKeyCode();
         switch (key){
+            case KeyEvent.VK_A:
+                superFire();
+                break;
+
             case KeyEvent.VK_CONTROL:
                 fire();//直接用tc来接收，初始化missle
                 System.out.println("ctrl=====");
@@ -329,6 +333,27 @@ public class Tank {
         Missile misle = new Missile(x,y,good, ptDir,this.tc);//把大管家tc传给misile
         tc.missiles.add(misle);
         return misle;
+    }
+
+    public Missile fire(Direction dir){
+        if (!live ){
+            return null;
+        }
+
+        int x = this.x + Tank.WIDTH/2 - Missile.WIDTH/2;
+        int y = this.y + Tank.HEIGHT/2 - Missile.HEIGHT/2;
+        Missile misle = new Missile(x,y,good, dir,this.tc);//把大管家tc传给misile
+        tc.missiles.add(misle);
+        return misle;
+    }
+
+
+
+    public void superFire(){
+        Direction[] dirs = Direction.values();
+        for (int i =0;i<8; i++){
+            fire(dirs[i]);
+        }
     }
 
     public Rectangle getRect(){
