@@ -27,6 +27,10 @@ public class TankClinet extends Frame{
 
     List<Tank> enemyTanks =new ArrayList<Tank>();
 
+    List<Wall> walls =new ArrayList<Wall>();
+
+
+
 
 
 
@@ -39,10 +43,16 @@ public class TankClinet extends Frame{
         g.drawString("Missiles:" + missiles.size(), 60, 40);
         g.drawString("explodes:" + explodes.size(), 60, 60);
         //这个大管家来调用其自己的方法
+       for (int i = 0; i<walls.size() ; i++){
+           Wall wall = walls.get(i);
+           wall.draw(g);
+        }
 
         for (int i = 0 ;i<missiles.size();i++) {
             Missile missile =missiles.get(i);
             missile.hitTanks(enemyTanks);//枚举所有的missile，打击每一个坦克
+            missile.hitTank(myTank);
+            missile.hitWalls(walls);
             missile.draw(g);
         }
 
@@ -89,9 +99,17 @@ public class TankClinet extends Frame{
         }
     }
 
+    public void addWalls(int wallNum){
+        for (int i = 0 ;i < wallNum ; i++){
+            Wall wall =new Wall(200+ i*400,200,this);
+            walls.add(wall);
+        }
+    }
+
     //弹出一个frame
     public void launchFrame(){
         addTank(10);
+        addWalls(2);
 
         this.setLocation(400,300);
         this.setSize(GAME_WIDTH,GAME_HEIGHT);

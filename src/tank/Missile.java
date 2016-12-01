@@ -9,7 +9,7 @@ import java.util.List;
  * 需要移除当前的missle，在client中的missiles所以你需要引入missile
  */
 public class Missile {
-    public static final int MISLE_VEL = 40;
+    public static final int MISLE_VEL = 20;
 
     public static final int WIDTH = 10;
     public static final int HEIGHT = 10;
@@ -18,6 +18,7 @@ public class Missile {
 
     private  int x;
     private int y;
+    private boolean good;
 
     public boolean isLive() {
         return live;
@@ -34,8 +35,9 @@ public class Missile {
         this.dir = dir;
     }
 
-    public Missile(int x,int y ,Tank.Direction dir,TankClinet tc){
+    public Missile(int x,int y ,boolean good, Tank.Direction dir,TankClinet tc){
         this(x,y,dir);
+        this.good = good;
         this.tc =tc;
     }
 
@@ -108,7 +110,7 @@ public class Missile {
 
 
     public boolean hitTank(Tank tank){
-        if (getRect().intersects(tank.getRect()) && tank.isLive()){
+        if (this.live && getRect().intersects(tank.getRect()) && tank.isLive() && this.good != tank.isGood()){
             tank.setLive(false);
             this.live = false;
             //增加爆炸
@@ -125,6 +127,23 @@ public class Missile {
         for (int i =0 ;i<tanks.size();i++){
             if (hitTank(tanks.get(i))){//打中了这个坦克
                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean hitWall(Wall wall){
+        if (live && getRect().intersects(wall.getRect())){
+            this.live =false;
+            return true;
+        }
+        return false;
+    }
+
+    public boolean hitWalls(List<Wall> walls){
+        for (Wall wall : walls){
+            if (hitWall(wall)){
+                return true;
             }
         }
         return false;

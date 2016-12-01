@@ -18,6 +18,15 @@ public class Tank {
     }
 
     private boolean live = true;
+
+    public boolean isGood() {
+        return good;
+    }
+
+    public void setGood(boolean good) {
+        this.good = good;
+    }
+
     private boolean good ;
     public static final int WIDTH = 30;
     public static final int HEIGHT = 30;
@@ -39,6 +48,8 @@ public class Tank {
     private Direction ptDir =Direction.D;//炮筒与坦克的方向应该是独立的
 
     public static final int TANNK_VEL = 20;
+
+    private int step = random.nextInt(8)+2;
 
     //需要把这里的missile传到tankclient中missile，方法是拿到missile的引
     public Tank(int x,int y,boolean good,Direction dir, TankClinet tc){
@@ -255,8 +266,17 @@ public class Tank {
         //每一栋一步后需要随机产生坦克的方向
         if (!good){
             Direction[] dirs =Direction.values();//把枚举换成数组
-            int randNum = random.nextInt(dirs.length);//随机整数作为索引
-            dir = dirs[randNum];
+            if (step == 0){
+                step = random.nextInt(10) +2;
+                int randNum = random.nextInt(dirs.length);//随机整数作为索引
+                dir = dirs[randNum];
+            }
+            step --;
+
+            if (random.nextInt(40) >30){
+                this.fire();
+            }
+
         }
 
 
@@ -280,9 +300,13 @@ public class Tank {
 
     //坦克打出来一发子弹
     public Missile fire(){
+        if (!live ){
+            return null;
+        }
+
         int x = this.x + Tank.WIDTH/2 - Missile.WIDTH/2;
         int y = this.y + Tank.HEIGHT/2 - Missile.HEIGHT/2;
-        Missile misle = new Missile(x,y,ptDir,this.tc);//把大管家tc传给misile
+        Missile misle = new Missile(x,y,good, ptDir,this.tc);//把大管家tc传给misile
         tc.missiles.add(misle);
         return misle;
     }
