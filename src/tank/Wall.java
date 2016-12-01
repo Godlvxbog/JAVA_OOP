@@ -12,7 +12,7 @@ public class Wall {
     private static final int WIDTH =20;
     private static final int HEIGHT =300;
 
-    private TankClinet tc;
+    private TankClinet tc;//拿到其应用就可以访问该类的所有内容了
 
     public Wall(int x,int y,TankClinet tc){
         this.x = x;

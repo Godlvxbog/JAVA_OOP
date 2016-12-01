@@ -63,6 +63,7 @@ public class TankClinet extends Frame{
 
         for (int i = 0;i<enemyTanks.size();i++){
             Tank enemy =enemyTanks.get(i);
+            enemy.collidesWalls(walls);
             enemy.draw(g);
 
         }

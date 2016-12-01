@@ -2,6 +2,7 @@ package tank;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -9,6 +10,8 @@ import java.util.Random;
  * 面向对象强调的是：关于状态的变化而非过程
  */
 public class Tank {
+
+
     public boolean isLive() {
         return live;
     }
@@ -39,6 +42,11 @@ public class Tank {
     private  boolean BR =false;
     private  boolean BD =false;
 
+    private int oldX;
+    private int oldY;
+
+
+
 
     protected enum Direction{
         L,LU,U,RU,R,RD,D,LD,STOP
@@ -63,6 +71,8 @@ public class Tank {
         this.x = x;
         this.y = y;
         this.good =good;
+        this.oldX = x;//记录上一步的坐标
+        this.oldY = y;
     }
 
 //    随机数产生器有一个就够了
@@ -201,12 +211,20 @@ public class Tank {
     }
 
 
+    public void stay(){
+        x= oldX;
+        y =oldY;
+    }
 
 
 
 
     //根据方向来移动坦克
     public void move(){
+        //每当完成了移动之前就保存上一步的坐标
+        this.oldX = x;
+        this.oldY = y;
+
         switch (dir){
             //每次你的顺序都这样就不会出错了
             case L:
@@ -281,6 +299,8 @@ public class Tank {
 
 
 
+
+
     }
 
     //通过按键来得到方向dir
@@ -313,5 +333,22 @@ public class Tank {
 
     public Rectangle getRect(){
         return new Rectangle(x,y,WIDTH,HEIGHT);
+    }
+
+    public boolean collidesWall(Wall wall){
+        if (live && getRect().intersects(wall.getRect())){
+            this.stay();
+            return true;
+        }
+        return false;
+    }
+
+    public boolean collidesWalls(List<Wall> walls){
+        for (Wall wall : walls){
+            if (collidesWall(wall)){
+                return true;
+            }
+        }
+        return false;
     }
 }
