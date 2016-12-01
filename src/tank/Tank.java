@@ -91,7 +91,11 @@ public class Tank {
 
     public void draw(Graphics g){
         if (!live){
-            return;
+            if (good ){
+                return;
+            }
+            tc.enemyTanks.remove(this);
+
         }
         //把图形颜色取出来，用完了，你在返回去
         Color color =g.getColor();
@@ -233,6 +237,16 @@ public class Tank {
     public void stay(){
         x= oldX;
         y =oldY;
+    }
+
+    //吃掉血块
+    public boolean eatBlood(Blood blood){
+        if (blood.isLive() && live && getRect().intersects(blood.getRect())){
+            this.life  = 100;
+            blood.setLive(false);//死掉；1
+            return true;
+        }
+        return false;
     }
 
 

@@ -123,6 +123,7 @@ public class Missile {
             }
 
             this.live = false;
+            tank.setLive(false);
             //增加爆炸
             Explode explode =new Explode(x,y,tc);
             tc.explodes.add(explode);
