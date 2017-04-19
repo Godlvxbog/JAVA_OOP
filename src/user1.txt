@@ -5,3 +5,6 @@ user2
 拿到user1的信息并作修改：知道制造冲突
 
 user2 修改user1
+
+
+user3 修改user1
